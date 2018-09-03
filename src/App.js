@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import ApolloClient from 'apollo-boost'
-import { ApolloProvider } from 'react-apollo'
 import { injectGlobal } from 'styled-components'
 
-import { GRAPHQL_ENDPOINT } from './config'
 import { colors, gradients } from './theme'
 
 import NotFound from './containers/NotFound'
 import Tip from './containers/Tip'
+
+import Nav from './components/Nav/Nav'
+import Screen from './components/Screen'
 
 injectGlobal`
   @font-face {
@@ -58,22 +58,40 @@ injectGlobal`
   }
 `
 
-const client = new ApolloClient({
-  uri: GRAPHQL_ENDPOINT
-})
-
 class App extends Component {
+  state = {
+    inputValue: ''
+  }
+
+  onChange = e => {
+    const amount = e.target.value
+    if(!amount || amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
+      this.setState(() => ({ inputValue: amount }))
+    }
+  }
+
   render() {
+    const { inputValue } = this.state
+
     return (
-      <ApolloProvider client={client}>
-        <Router>
-          {/* HERE GOES THE NAVIGATION! */}
+      <Router>
+        <Screen>
+          <Nav />
           <Switch>
-            <Route exact path="/" component={Tip} />
+            <Route 
+              exact
+              path="/"
+              render={props => <Tip {...props} inputValue={inputValue} onChange={this.onChange} />}
+            />
+            <Route 
+              exact
+              path="/sales-tax"
+              render={props => <Tip {...props} inputValue={inputValue} onChange={this.onChange} />}
+            />
             <Route component={NotFound} />
           </Switch>
-        </Router>
-      </ApolloProvider>
+        </Screen>
+      </Router>
     )
   }
 }

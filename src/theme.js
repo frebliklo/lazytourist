@@ -117,6 +117,10 @@ export const gradients = {
   brand: `linear-gradient(180deg, ${colors.secondary} 0%, ${colors.primary} 100%)`
 }
 
+export const shadows = {
+  default: '0 3px 6px rgba(0,0,0,.3)'
+}
+
 export default {
   gradients,
   colors
