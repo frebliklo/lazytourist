@@ -112,3 +112,12 @@ export const colors = {
     "900": "#09283d"
   }
 }
+
+export const gradients = {
+  brand: `linear-gradient(180deg, ${colors.secondary} 0%, ${colors.primary} 100%)`
+}
+
+export default {
+  gradients,
+  colors
+}
