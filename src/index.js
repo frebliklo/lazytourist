@@ -11,8 +11,55 @@ import App from './App'
 
 import registerServiceWorker from './registerServiceWorker'
 
+const defaults = {
+  input: {
+    value: '',
+    __typename: 'InputValue'
+  },
+  gratuity: {
+    percent: .18,
+    __typename: 'GratuityPercent'
+  }
+}
+
+const resolvers = {
+  Mutation: {
+    updateInput: (_, params, { cache }) => {
+      const data = {
+        input: {
+          value: '',
+          __typename: 'InputValue'
+        }
+      }
+
+      cache.writeData(({ data }))
+      return null
+    }
+  }
+}
+
+const typeDefs = `
+  type Input {
+    value: Float!
+  }
+
+  type Gratuity {
+    percent: Float!
+  }
+
+  type Query {
+    input: Input
+    gratuity: Gratuity
+  }
+`
+
 const client = new ApolloClient({
-  uri: GRAPHQL_ENDPOINT
+  uri: GRAPHQL_ENDPOINT,
+  clientState: {
+    defaults,
+    resolvers,
+    typeDefs
+  }
 })
 
 const WrappedApp = () => (

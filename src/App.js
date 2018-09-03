@@ -81,7 +81,7 @@ class App extends Component {
             <Route 
               exact
               path="/"
-              render={props => <Tip {...props} inputValue={inputValue} onChange={this.onChange} />}
+              component={Tip}
             />
             <Route 
               exact

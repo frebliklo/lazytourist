@@ -1,56 +1,57 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
 import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
 
-const USD_ALL_RATES = gql`
-  query usdAllSoruces{
-    currency(source:"usd") {
-      source
-      name
-      rates {
-        name
-        currency
-        rate
-      }
-    }
-  }
+import Container from '../components/Container'
+import InputForm from '../components/InputForm'
+import RangeSlider from '../components/RangeSlider'
+import ScreenTitle from '../components/ScreenTitle'
+
+import { INPUT_VALUE } from '../queries'
+
+const ContentContainer = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100%;
 `
 
 class Tip extends Component {
-  state = {
-    gratuity: .18,
-    secondaryCurrency: {
-      currency: 'DKK',
-      rate: 6.4
+  handleInputChange = (client, e) => {
+    const amount = e.target.value
+    console.log(amount)
+    if(!amount || amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
+      client.writeData({
+        data: { input: { value: amount, __typename: 'InputValue' } }
+      })
     }
+  }
+
+  renderValues = () => {
+    return (
+      <ContentContainer>
+        <RangeSlider />
+      </ContentContainer>
+    )
   }
   
   render() {
     return (
-      <div>
-        <h1>Tip</h1>
-        <Query query={USD_ALL_RATES}>
-          {({ loading, error, data }) => {
-            if(loading) return <p>Getting latest exchange rate</p>
-            if(error) return <p>Couldn't find lates rate</p>
-
-            const { currency } = data
-            console.log(currency)
-            return (
-              <div>
-                <h5>Got data!</h5>
-                <p>{currency.name}</p>
-                {currency.rates.map(exchange => (
-                  <div key={exchange.currency}>
-                    <h6>{exchange.name}</h6>
-                    <p>{exchange.rate}</p>
-                  </div>
-                ))}
-              </div>
-            )
-          }}
-        </Query>
-      </div>
+      <Query query={INPUT_VALUE}>
+        {({ loading, error, data, client }) => {
+          const { value } = data.input
+          return (
+            <Container margin="3.2rem auto">
+              <ScreenTitle>Tip</ScreenTitle>
+              <ContentContainer>
+                <InputForm value={value} onChange={e => this.handleInputChange(client, e)} />
+              </ContentContainer>
+              {value ? this.renderValues() : null}
+            </Container>
+          )
+        }}
+      </Query>
     )
   }
 }

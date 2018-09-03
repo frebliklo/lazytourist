@@ -1,4 +1,4 @@
-import gql from 'graphql-tag'
+import { gql } from 'apollo-boost'
 
 const USD_ALL_RATES = gql`
   query usdAllSoruces{
