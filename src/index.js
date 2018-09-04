@@ -19,6 +19,12 @@ const defaults = {
   gratuity: {
     percent: .18,
     __typename: 'GratuityPercent'
+  },
+  location: {
+    lat: '',
+    lng: '',
+    address: '',
+    __typename: 'Location'
   }
 }
 
@@ -47,9 +53,16 @@ const typeDefs = `
     percent: Float!
   }
 
+  type Location {
+    lat: String!
+    lng: String!
+    address: String!
+  }
+
   type Query {
     input: Input
     gratuity: Gratuity
+    location: Location
   }
 `
 

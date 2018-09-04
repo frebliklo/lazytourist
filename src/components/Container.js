@@ -25,6 +25,15 @@ export const AnimatedContentContainer = styled(ContentContainer)`
   animation: ${enterAnimation} 300ms ease-out;
 `
 
+export const ValuesContainer = styled.div`
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+`
+
 const Container = styled.div`
   flex: 1;
   display: flex;

@@ -14,6 +14,7 @@ const Input = styled.input`
   box-shadow: ${shadows.default};
   padding: 1.6rem 0;
   max-width: 100%;
+  outline: none;
 `
 
 const Form = styled.form`

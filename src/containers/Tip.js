@@ -1,23 +1,17 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
 import { Query } from 'react-apollo'
 
 import { GET_LOCAL_STATE_TIP } from '../queries'
 
-import Container, { ContentContainer, AnimatedContentContainer } from '../components/Container'
+import Container, { 
+  ContentContainer,
+  AnimatedContentContainer,
+  ValuesContainer 
+} from '../components/Container'
 import InputForm from '../components/InputForm'
 import RangeSlider from '../components/RangeSlider'
 import ScreenTitle from '../components/ScreenTitle'
 import TipAmounts from '../components/TipAmounts'
-
-const ValuesContainer = styled.div`
-  width: 100%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-`
 
 class Tip extends Component {
   handleInputChange = (client, e) => {

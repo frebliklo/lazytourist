@@ -5,6 +5,7 @@ import { injectGlobal } from 'styled-components'
 import { colors, gradients } from './theme'
 
 import NotFound from './containers/NotFound'
+import Sales from './containers/Sales'
 import Tip from './containers/Tip'
 
 import Nav from './components/Nav/Nav'
@@ -86,7 +87,7 @@ class App extends Component {
             <Route 
               exact
               path="/sales-tax"
-              render={props => <Tip {...props} inputValue={inputValue} onChange={this.onChange} />}
+              component={Sales}
             />
             <Route component={NotFound} />
           </Switch>

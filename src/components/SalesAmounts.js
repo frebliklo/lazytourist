@@ -4,19 +4,19 @@ import { Query } from 'react-apollo'
 import { USD_TO_DKK } from '../queries'
 
 import Amount from './Amount'
-import AmountSeperator from './AmountSeperator'
+import AmountSeperator from './AmountSeperator';
 
-const TipAmounts = ({ inputValue, gratuity }) => (
+const SalesAmounts = ({ inputValue, salesTax }) => (
   <Query query={USD_TO_DKK}>
-    {({loading, error, data}) => {
+    {({ loading, error, data }) => {
       if (loading) return null
       if (error) return `Error!: ${error}`
-      
+
       const { source, exchangeRate } = data.currency
       const { currency, rate } = exchangeRate
 
-      const tipAmount = inputValue*gratuity
-      const totalAmount = parseFloat(inputValue)+parseFloat(tipAmount)
+      const taxAmount = inputValue*parseFloat(salesTax)
+      const totalAmount = parseFloat(inputValue)+parseFloat(taxAmount)
 
       return (
         <div>
@@ -28,11 +28,11 @@ const TipAmounts = ({ inputValue, gratuity }) => (
             amount={inputValue}
           />
           <Amount
-            label="Tip"
+            label="Tax"
             exchangeCurrency={currency}
-            exchangedAmount={tipAmount*rate}
+            exchangedAmount={taxAmount*rate}
             currency={source}
-            amount={tipAmount}
+            amount={taxAmount}
           />
           <AmountSeperator />
           <Amount
@@ -48,4 +48,4 @@ const TipAmounts = ({ inputValue, gratuity }) => (
   </Query>
 )
 
-export default TipAmounts
+export default SalesAmounts
