@@ -31,7 +31,7 @@ const Slider = styled.input`
     width: 1.6rem;
     height: 1.6rem;
     border-radius: 50%;
-    background: ${colors.white}
+    background: ${colors.white};
     cursor: pointer;
     transition: background 170ms ease-in-out;
 
