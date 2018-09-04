@@ -1,39 +1,14 @@
 import React, { Component } from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { Query } from 'react-apollo'
 
 import { GET_LOCAL_STATE_TIP } from '../queries'
 
-import Container from '../components/Container'
+import Container, { ContentContainer, AnimatedContentContainer } from '../components/Container'
 import InputForm from '../components/InputForm'
 import RangeSlider from '../components/RangeSlider'
 import ScreenTitle from '../components/ScreenTitle'
 import TipAmounts from '../components/TipAmounts'
-
-const enterAnimation = keyframes`
-  0% {
-    scale: 0;
-    opacity: 0;
-  }
-  100% {
-    scale: 1;
-    opacity: 1;
-  }
-`
-
-const ContentContainer = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 100%;
-  transition: all 200ms ease-out;
-  margin: 3.2rem 0;
-`
-
-const AnimatedContentContainer = styled(ContentContainer)`
-  animation: ${enterAnimation} 300ms ease-out;
-`
 
 const ValuesContainer = styled.div`
   width: 100%;

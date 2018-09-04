@@ -15,7 +15,7 @@ export const ContentContainer = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: ${props => props.justify ? props.justify : 'space-around'};
   width: 100%;
   transition: all 200ms ease-out;
   margin: 3.2rem 0;
