@@ -60,10 +60,6 @@ injectGlobal`
 `
 
 class App extends Component {
-  state = {
-    inputValue: ''
-  }
-
   onChange = e => {
     const amount = e.target.value
     if(!amount || amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
@@ -72,8 +68,6 @@ class App extends Component {
   }
 
   render() {
-    const { inputValue } = this.state
-
     return (
       <Router>
         <Screen>

@@ -87,7 +87,7 @@ class Sales extends Component {
               {this.fetchDeviceLocation(location, client)}
               <ContentContainer>
                 <InputForm value={value} onChange={e => this.handleInputChange(client, e)} />
-                {value && location.lat || location.address ? this.renderValues(value,location) : null}
+                {location.lat || location.address ? this.renderValues(value,location) : null}
               </ContentContainer>
             </Container>
           )
