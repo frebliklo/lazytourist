@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
-import { Query } from 'react-apollo'
 import styled from 'styled-components'
-
-import { INPUT_VALUE } from '../queries'
 
 import { colors, shadows } from '../theme'
 

@@ -1,13 +1,25 @@
 import React, { Component } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { Query } from 'react-apollo'
+
+import { GET_LOCAL_STATE_TIP } from '../queries'
 
 import Container from '../components/Container'
 import InputForm from '../components/InputForm'
 import RangeSlider from '../components/RangeSlider'
 import ScreenTitle from '../components/ScreenTitle'
+import TipAmounts from '../components/TipAmounts'
 
-import { INPUT_VALUE } from '../queries'
+const enterAnimation = keyframes`
+  0% {
+    scale: 0;
+    opacity: 0;
+  }
+  100% {
+    scale: 1;
+    opacity: 1;
+  }
+`
 
 const ContentContainer = styled.div`
   flex: 1;
@@ -15,12 +27,27 @@ const ContentContainer = styled.div`
   flex-direction: column;
   justify-content: space-around;
   width: 100%;
+  transition: all 200ms ease-out;
+  margin: 3.2rem 0;
+`
+
+const AnimatedContentContainer = styled(ContentContainer)`
+  animation: ${enterAnimation} 300ms ease-out;
+`
+
+const ValuesContainer = styled.div`
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 `
 
 class Tip extends Component {
   handleInputChange = (client, e) => {
     const amount = e.target.value
-    console.log(amount)
+
     if(!amount || amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
       client.writeData({
         data: { input: { value: amount, __typename: 'InputValue' } }
@@ -28,26 +55,43 @@ class Tip extends Component {
     }
   }
 
-  renderValues = () => {
+  handleGratuityChange = (client, e) => {
+    const value = e.target.value
+    client.writeData({
+      data: { gratuity: { percent: value, __typename: 'GratuityPercent' } }
+    })
+  }
+
+  renderValues = (inputValue, gratuity, onChange, client) => {
     return (
-      <ContentContainer>
-        <RangeSlider />
-      </ContentContainer>
+      <ValuesContainer>
+        <AnimatedContentContainer>
+          <TipAmounts inputValue={inputValue} gratuity={gratuity} />
+        </AnimatedContentContainer>
+        <AnimatedContentContainer>
+          <RangeSlider percent={gratuity} onChange={e => onChange(client, e)} />
+        </AnimatedContentContainer>
+      </ValuesContainer>
     )
   }
   
   render() {
     return (
-      <Query query={INPUT_VALUE}>
+      <Query query={GET_LOCAL_STATE_TIP}>
         {({ loading, error, data, client }) => {
+          if(loading) return null
+          if(error) return null
+
           const { value } = data.input
+          const { percent } = data.gratuity
+
           return (
-            <Container margin="3.2rem auto">
+            <Container>
               <ScreenTitle>Tip</ScreenTitle>
               <ContentContainer>
                 <InputForm value={value} onChange={e => this.handleInputChange(client, e)} />
+                {value ? this.renderValues(value, percent, this.handleGratuityChange, client) : null}
               </ContentContainer>
-              {value ? this.renderValues() : null}
             </Container>
           )
         }}
