@@ -42,7 +42,7 @@ const Container = styled.div`
   align-items: flex-start;
   margin: ${props => props.margin ? props.margin : '0 auto'};
   width: 100%;
-  padding: ${props =>  props.padding ? props.padding : '1.6rem'};
+  padding: ${props =>  props.padding ? props.padding : '1.6rem 1.6rem 0 1.6rem'};
   max-width: 40rem;
 `
 

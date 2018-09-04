@@ -36,7 +36,6 @@ class InputForm extends Component {
       <Context.Consumer>
         {value => (
           <Form onSubmit={this.onSubmit} >
-            {console.log(value)}
             <Input
               type="number"
               placeholder="Input amount"
