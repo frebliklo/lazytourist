@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import Context from '../../Context'
+
 import { colors } from '../../theme'
 
 import NavItem from './NavItem'
@@ -16,6 +18,7 @@ const NavContainer = styled.nav`
   flex-direction: row;
   justify-content: space-around;
   background: ${colors.primary};
+  transition: opacity 170ms ease-in-out;
 
   & .active {
     color: ${colors.blue['000']};
@@ -31,16 +34,20 @@ const NavContainer = styled.nav`
 `
 
 const Nav = () => (
-  <NavContainer>
-    {routes.map(route => (
-      <NavItem
-        key={route.label}
-        path={route.path} 
-        label={route.label} 
-        icon={route.icon} 
-      />
-    ))}
-  </NavContainer>
+  <Context.Consumer>
+    {({ navOpacity }) => (
+      <NavContainer style={{ opacity: navOpacity }}>
+        {routes.map(route => (
+          <NavItem
+            key={route.label}
+            path={route.path} 
+            label={route.label} 
+            icon={route.icon} 
+          />
+        ))}
+      </NavContainer>
+    )}
+  </Context.Consumer>
 )
 
 export default Nav

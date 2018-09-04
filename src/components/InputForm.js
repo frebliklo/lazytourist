@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
+import Context from '../Context'
+
 import { colors, shadows } from '../theme'
 
 const Input = styled.input`
@@ -28,17 +30,24 @@ class InputForm extends Component {
   }
 
   render() {
-    const { value, onChange } = this.props
+    const { inputValue, onChange } = this.props
 
     return (
-      <Form onSubmit={this.onSubmit}>
-        <Input
-          type="number"
-          placeholder="Input amount"
-          value={value}
-          onChange={onChange}
-        />
-      </Form>
+      <Context.Consumer>
+        {value => (
+          <Form onSubmit={this.onSubmit} >
+            {console.log(value)}
+            <Input
+              type="number"
+              placeholder="Input amount"
+              value={inputValue}
+              onChange={onChange}
+              onFocus={value.toggleNavOpacity} 
+              onBlur={value.toggleNavOpacity}
+            />
+          </Form>
+        )}
+      </Context.Consumer>
     )
   }
 }

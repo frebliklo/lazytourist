@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { injectGlobal } from 'styled-components'
 
+import Context from './Context'
+
 import { colors, gradients } from './theme'
 
 import NotFound from './containers/NotFound'
@@ -37,6 +39,7 @@ injectGlobal`
   }
 
   body {
+    position: relative;
     box-sizing: border-box;
     background: ${gradients.brand};
     color: ${colors.white};
@@ -60,10 +63,18 @@ injectGlobal`
 `
 
 class App extends Component {
-  onChange = e => {
-    const amount = e.target.value
-    if(!amount || amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
-      this.setState(() => ({ inputValue: amount }))
+  constructor(props) {
+    super(props)
+
+    this.toggleNavOpacity = () => {
+      this.setState(state => ({
+        navOpacity: state.navOpacity === 0 ? 1 : 0,
+      }))
+    }
+
+    this.state = {
+      navOpacity: 1,
+      toggleNavOpacity: this.toggleNavOpacity
     }
   }
 
@@ -71,20 +82,22 @@ class App extends Component {
     return (
       <Router>
         <Screen>
-          <Nav />
-          <Switch>
-            <Route 
-              exact
-              path="/"
-              component={Tip}
-            />
-            <Route 
-              exact
-              path="/sales-tax"
-              component={Sales}
-            />
-            <Route component={NotFound} />
-          </Switch>
+          <Context.Provider value={this.state}>
+            <Nav />
+            <Switch>
+              <Route 
+                exact
+                path="/"
+                component={Tip}
+              />
+              <Route 
+                exact
+                path="/sales-tax"
+                component={Sales}
+              />
+              <Route component={NotFound} />
+            </Switch>
+          </Context.Provider>
         </Screen>
       </Router>
     )

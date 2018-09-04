@@ -86,7 +86,10 @@ class Sales extends Component {
               <ScreenTitle>Sales tax</ScreenTitle>
               {this.fetchDeviceLocation(location, client)}
               <ContentContainer>
-                <InputForm value={value} onChange={e => this.handleInputChange(client, e)} />
+                <InputForm 
+                  inputValue={value}
+                  onChange={e => this.handleInputChange(client, e)} 
+                />
                 {location.lat || location.address ? this.renderValues(value,location) : null}
               </ContentContainer>
             </Container>

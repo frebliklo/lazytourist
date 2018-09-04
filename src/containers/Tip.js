@@ -58,7 +58,10 @@ class Tip extends Component {
             <Container>
               <ScreenTitle>Tip</ScreenTitle>
               <ContentContainer>
-                <InputForm value={value} onChange={e => this.handleInputChange(client, e)} />
+                <InputForm 
+                  inputValue={value}
+                  onChange={e => this.handleInputChange(client, e)}
+                />
                 {value ? this.renderValues(value, percent, this.handleGratuityChange, client) : null}
               </ContentContainer>
             </Container>
